@@ -58,8 +58,8 @@ services:
       - GF_EXPLORE_ENABLED=true
     ports:
       - "3000:3000"
-      depends_on:
-        - prometheus
+    depends_on:
+      - prometheus
 
   db:
     image: postgres:11-alpine
