@@ -8,6 +8,7 @@ volumes:
 services:
   prometheus:
     image: prom/prometheus:latest
+    container_name: "prometheus"
     volumes:
       - prometheus-storage:/prometheus
       - ./monitor/prometheus/:/etc/prometheus/:ro
@@ -20,6 +21,7 @@ services:
 
   nodeexporter:
     image: prom/node-exporter:latest
+    container_name: "nodeexporter"
     user: root
     privileged: true
     volumes:
@@ -37,6 +39,7 @@ services:
 
   cadvisor:
     image: google/cadvisor:latest
+    container_name: "cadvisor"
     volumes:
       - /:/rootfs:ro
       - /var/run:/var/run:rw
@@ -49,6 +52,7 @@ services:
 
   grafana:
     image: grafana/grafana:latest
+    container_name: "grafana"
     volumes:
       - grafana-storage:/var/lib/grafana
       - ./monitor/grafana/:/etc/grafana/provisioning/
@@ -63,6 +67,7 @@ services:
 
   db:
     image: postgres:11-alpine
+    container_name: "postgres"
     environment:
       POSTGRES_PASSWORD: root
       POSTGRES_USER: root
@@ -72,6 +77,7 @@ services:
 
   heplify-server:
     image: sipcapture/heplify-server:latest
+    container_name: "heplify-server"
     expose:
       - 9060
       - 9060/udp
@@ -100,6 +106,7 @@ services:
     build:
       context: ./
       dockerfile: ./ubuntu/Dockerfile
+    container_name: "asterisk"
     volumes:
       - ./asterisk/:/etc/asterisk/:ro
     ports:
