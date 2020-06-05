@@ -1,0 +1,109 @@
+version: '3'
+
+volumes:
+  prometheus-storage: {}
+  grafana-storage: {}
+  postgres-storage: {}
+
+services:
+  prometheus:
+    image: prom/prometheus:latest
+    volumes:
+      - prometheus-storage:/prometheus
+      - ./monitor/prometheus/:/etc/prometheus/:ro
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+      - '--storage.tsdb.retention.time=7d'
+    expose:
+      - 9090
+
+  nodeexporter:
+    image: prom/node-exporter:latest
+    user: root
+    privileged: true
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+      - /:/rootfs:ro
+    command:
+      - '--path.procfs=/host/proc'
+      - '--path.sysfs=/host/sys'
+      - '--collector.filesystem.ignored-mount-points=^/(sys|proc|dev|host|etc)($$|/)'
+    expose:
+      - 9100
+    depends_on:
+      - prometheus
+
+  cadvisor:
+    image: google/cadvisor:latest
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run:rw
+      - /sys:/sys:ro
+      - /var/lib/docker/:/var/lib/docker:ro
+    expose:
+      - 8080
+    depends_on:
+      - prometheus
+
+  grafana:
+    image: grafana/grafana:latest
+    volumes:
+      - grafana-storage:/var/lib/grafana
+      - ./monitor/grafana/:/etc/grafana/provisioning/
+    environment:
+      - GF_SECURITY_ADMIN_USER=admin
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+      - GF_EXPLORE_ENABLED=true
+    ports:
+      - "3000:3000"
+      depends_on:
+        - prometheus
+
+  db:
+    image: postgres:11-alpine
+    environment:
+      POSTGRES_PASSWORD: root
+      POSTGRES_USER: root
+    volumes:
+      - postgres-storage:/var/lib/postgresql/data
+      - ./monitor/postgres/init-user-db.sh:/docker-entrypoint-initdb.d/init-user-db.sh
+
+  heplify-server:
+    image: sipcapture/heplify-server:latest
+    expose:
+      - 9060
+      - 9060/udp
+    command:
+      - './heplify-server'
+    environment:
+      - "HEPLIFYSERVER_HEPADDR=0.0.0.0:9060"
+      - "HEPLIFYSERVER_DBDRIVER=postgres"
+      - "HEPLIFYSERVER_DBSHEMA=homer7"
+      - "HEPLIFYSERVER_DBADDR=db:5432"
+      - "HEPLIFYSERVER_DBUSER=root"
+      - "HEPLIFYSERVER_DBPASS=root"
+      - "HEPLIFYSERVER_DBDATATABLE=homer_data"
+      - "HEPLIFYSERVER_DBCONFTABLE=homer_config"
+      - "HEPLIFYSERVER_DBROTATE=true"
+      - "HEPLIFYSERVER_LOGLVL=debug"
+      - "HEPLIFYSERVER_LOGSTD=true"
+      - "HEPLIFYSERVER_PROMADDR=0.0.0.0:9096"
+      - "HEPLIFYSERVER_PROMTARGETIP="
+      - "HEPLIFYSERVER_PROMTARGETNAME="
+      - "HEPLIFYSERVER_DBDROPDAYS=1"
+    depends_on:
+    - db
+
+  asterisk:
+    build:
+      context: ./
+      dockerfile: ./ubuntu/Dockerfile
+    volumes:
+      - ./asterisk/:/etc/asterisk/:ro
+    ports:
+      - 5060:5060/udp
+      - 10000-11000:10000-11000/udp
+    depends_on:
+      - heplify-server
