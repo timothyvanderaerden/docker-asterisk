@@ -40,7 +40,7 @@
                 "overrides": []
             },
             "gridPos": {
-                "h": 5,
+                "h": 4,
                 "w": 4,
                 "x": 0,
                 "y": 0
@@ -55,10 +55,11 @@
                     "calcs": [
                         "lastNotNull"
                     ],
+                    "fields": "",
                     "values": false
                 }
             },
-            "pluginVersion": "7.0.1",
+            "pluginVersion": "7.0.3",
             "targets": [
                 {
                     "expr": "(sum(increase(heplify_method_response{target_name=~\"$target\", method=\"INVITE\", response=\"200\"}[$__interval]))) /\n(sum(increase(heplify_method_response{target_name=~\"$target\", method=\"INVITE\", response=\"INVITE\"}[$__interval])) -\n(sum(increase(heplify_method_response{target_name=~\"$target\", method=\"INVITE\", response=~\"3.*|401|407\"}[$__interval])) or sum(up) * 0)) *\n160 * sum(rate(heplify_method_response{target_name=~\"$target\", method=\"INVITE\", response=\"INVITE\"}[$__interval]))",
@@ -94,7 +95,7 @@
                 "overrides": []
             },
             "gridPos": {
-                "h": 5,
+                "h": 4,
                 "w": 4,
                 "x": 4,
                 "y": 0
@@ -109,10 +110,11 @@
                     "calcs": [
                         "lastNotNull"
                     ],
+                    "fields": "",
                     "values": false
                 }
             },
-            "pluginVersion": "7.0.1",
+            "pluginVersion": "7.0.3",
             "targets": [
                 {
                     "expr": "sum(rate(heplify_method_response{target_name=~\"$target\", method=\"INVITE\", response=\"200\"}[$__interval]))",
@@ -150,7 +152,7 @@
                 "overrides": []
             },
             "gridPos": {
-                "h": 5,
+                "h": 4,
                 "w": 4,
                 "x": 8,
                 "y": 0
@@ -165,10 +167,11 @@
                     "calcs": [
                         "lastNotNull"
                     ],
+                    "fields": "",
                     "values": false
                 }
             },
-            "pluginVersion": "7.0.1",
+            "pluginVersion": "7.0.3",
             "targets": [
                 {
                     "expr": "sum(rate(heplify_method_response{target_name=~\"$target\", method=\"INVITE\", response=\"INVITE\"}[$__interval]))",
@@ -206,7 +209,7 @@
                 "overrides": []
             },
             "gridPos": {
-                "h": 5,
+                "h": 4,
                 "w": 4,
                 "x": 12,
                 "y": 0
@@ -221,10 +224,11 @@
                     "calcs": [
                         "lastNotNull"
                     ],
+                    "fields": "",
                     "values": false
                 }
             },
-            "pluginVersion": "7.0.1",
+            "pluginVersion": "7.0.3",
             "targets": [
                 {
                     "expr": "sum(rate(heplify_method_response{target_name=~\"$target\", method=\"REGISTER\", response=\"200\"}[$__interval]))",
@@ -262,7 +266,7 @@
                 "overrides": []
             },
             "gridPos": {
-                "h": 5,
+                "h": 4,
                 "w": 4,
                 "x": 16,
                 "y": 0
@@ -277,10 +281,11 @@
                     "calcs": [
                         "lastNotNull"
                     ],
+                    "fields": "",
                     "values": false
                 }
             },
-            "pluginVersion": "7.0.1",
+            "pluginVersion": "7.0.3",
             "targets": [
                 {
                     "expr": "sum(rate(heplify_method_response{target_name=~\"$target\", method=\"REGISTER\", response=\"REGISTER\"}[$__interval]))",
@@ -322,7 +327,7 @@
                 "overrides": []
             },
             "gridPos": {
-                "h": 5,
+                "h": 4,
                 "w": 4,
                 "x": 20,
                 "y": 0
@@ -337,10 +342,11 @@
                     "calcs": [
                         "lastNotNull"
                     ],
+                    "fields": "",
                     "values": false
                 }
             },
-            "pluginVersion": "7.0.1",
+            "pluginVersion": "7.0.3",
             "targets": [
                 {
                     "expr": "sum(rate(heplify_method_response{target_name=~\"$target\", method=\"INVITE\", response=~\"50.*\"}[$__interval]))",
@@ -390,7 +396,7 @@
                 "h": 7,
                 "w": 24,
                 "x": 0,
-                "y": 5
+                "y": 4
             },
             "hiddenSeries": false,
             "id": 10,
@@ -505,7 +511,7 @@
                 "h": 7,
                 "w": 24,
                 "x": 0,
-                "y": 12
+                "y": 11
             },
             "hiddenSeries": false,
             "id": 11,
@@ -620,7 +626,7 @@
                 "h": 7,
                 "w": 24,
                 "x": 0,
-                "y": 19
+                "y": 18
             },
             "hiddenSeries": false,
             "id": 14,
@@ -766,7 +772,7 @@
                 "h": 7,
                 "w": 24,
                 "x": 0,
-                "y": 26
+                "y": 25
             },
             "hiddenSeries": false,
             "id": 15,
@@ -881,7 +887,7 @@
                 "h": 7,
                 "w": 24,
                 "x": 0,
-                "y": 33
+                "y": 32
             },
             "hiddenSeries": false,
             "id": 12,
