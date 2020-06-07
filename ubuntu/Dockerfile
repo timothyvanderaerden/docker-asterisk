@@ -10,7 +10,7 @@ RUN apt-get update
 RUN apt-get upgrade -y
 RUN apt-get install -y make g++ patch libedit-dev uuid-dev libjansson-dev libxml2-dev libsqlite3-dev libssl-dev wget
 
-# Download Asterisk (LTS)
+# Download Asterisk
 WORKDIR /tmp
 RUN wget https://downloads.asterisk.org/pub/telephony/asterisk/asterisk-${ASTERISK_VERSION}-current.tar.gz \
     && mkdir asterisk \
@@ -57,7 +57,6 @@ RUN chown -R asterisk:asterisk /var/lib/asterisk \
     && chown -R asterisk:asterisk /var/spool/asterisk \
     && chown -R asterisk:asterisk /var/log/asterisk \
     && chown -R asterisk:asterisk /var/run/asterisk \
-    && chown -R asterisk:asterisk /var/log/asterisk \
     && chown asterisk:asterisk /usr/sbin/asterisk
 
 # Cleanup

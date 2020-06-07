@@ -119,22 +119,10 @@
                                 "value": 90
                             }
                         ]
-                    }
+                    },
+                    "unit": "percent"
                 },
-                "overrides": [
-                    {
-                        "matcher": {
-                            "id": "byName",
-                            "options": "Value"
-                        },
-                        "properties": [
-                            {
-                                "id": "unit",
-                                "value": "percent"
-                            }
-                        ]
-                    }
-                ]
+                "overrides": []
             },
             "gridPos": {
                 "h": 5,
@@ -169,7 +157,7 @@
             ],
             "timeFrom": null,
             "timeShift": null,
-            "title": "Total CPU usage",
+            "title": "Total CPU Usage",
             "type": "gauge"
         },
         {
@@ -303,7 +291,7 @@
                     "format": "time_series",
                     "interval": "",
                     "intervalFactor": 2,
-                    "legendFormat": "Received",
+                    "legendFormat": "Receive",
                     "refId": "A",
                     "step": 4
                 },
@@ -312,7 +300,7 @@
                     "hide": false,
                     "interval": "",
                     "intervalFactor": 2,
-                    "legendFormat": "Transmitted",
+                    "legendFormat": "Transmit",
                     "refId": "B",
                     "step": 4
                 }
@@ -1087,5 +1075,5 @@
     "timezone": "",
     "title": "Docker overview",
     "uid": "DacHknmGk",
-    "version": 1
+    "version": 2
 }
