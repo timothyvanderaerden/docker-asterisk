@@ -26,6 +26,7 @@ RUN make menuselect.makeopts \
     --enable app_senddtmf \
     --enable chan_pjsip \
     --enable codec_alaw \
+    --enable format_pcm \
     --enable func_channel \
     --enable MOH-OPSOUND-ALAW \
     --enable pbx_config \
