@@ -110,8 +110,8 @@ services:
     container_name: "asterisk"
     volumes:
       - ./asterisk/:/etc/asterisk/:ro
-    ports:
-      - 5060:5060/udp
-      - 10000-11000:10000-11000/udp
+    expose:
+      - 5060/udp
+      - 10000-11000/udp
     depends_on:
       - heplify-server
