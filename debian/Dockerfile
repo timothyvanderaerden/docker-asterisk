@@ -1,8 +1,5 @@
 FROM debian:latest
 
-# Set the version for Asterisk
-ENV ASTERISK_VERSION 16
-
 # Disable possible prompt (like tzdata)
 ARG DEBIAN_FRONTEND=noninteractive
 
