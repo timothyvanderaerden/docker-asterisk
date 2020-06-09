@@ -6,7 +6,9 @@ ARG DEBIAN_FRONTEND=noninteractive
 # Install dependencies (minimal required)
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt-get install -y make g++ patch libedit-dev uuid-dev libjansson-dev libxml2-dev libsqlite3-dev libssl-dev wget
+RUN apt-get install -y --no-install-recommends libedit2 libjansson4 sqlite3 libxml2 libssl1.1
+RUN apt-get install -y --no-install-recommends make g++ patch libedit-dev uuid-dev libjansson-dev libxml2-dev libsqlite3-dev \
+    libssl-dev wget ca-certificates
 
 WORKDIR /tmp
 # Download Asterisk
@@ -35,7 +37,9 @@ RUN /tmp/set_ownership.sh
 # Cleanup
 RUN rm -rf /tmp/*
 RUN apt-get -y autoremove \
-    && apt-get clean
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+RUN apt-get remove -y make g++ patch libedit-dev uuid-dev libjansson-dev libxml2-dev libsqlite3-dev libssl-dev wget ca-certificates
 
 EXPOSE 5060/udp
 EXPOSE 10000-11000/udp
