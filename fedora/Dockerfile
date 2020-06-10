@@ -2,9 +2,9 @@ FROM fedora:latest
 
 # Install dependencies (minimal required)
 RUN dnf upgrade -y
-RUN dnf install -y --setopt=install_weak_deps=False libedit jansson sqlite
+RUN dnf install -y --setopt=install_weak_deps=False libedit jansson sqlite speex speexdsp xmlstarlet libcurl
 RUN dnf install -y --setopt=install_weak_deps=False make gcc-c++ patch libedit-devel libuuid-devel jansson-devel libxml2-devel sqlite-devel \
-    openssl-devel wget bzip2 findutils diffutils
+    openssl-devel speex-devel speexdsp-devel wget bzip2 findutils diffutils
 
 WORKDIR /tmp
 # Download Asterisk
@@ -32,7 +32,8 @@ RUN /tmp/set_ownership.sh
 
 # Cleanup
 RUN rm -rf /tmp/*
-RUN dnf remove -y make gcc-c++ patch libedit-devel libuuid-devel jansson-devel libxml2-devel sqlite-devel openssl-devel wget bzip2 findutils diffutils
+RUN dnf remove -y make gcc-c++ patch libedit-devel libuuid-devel jansson-devel libxml2-devel sqlite-devel openssl-devel wget bzip2 findutils diffutils \
+    speex-devel speexdsp-devel
 RUN dnf -y autoremove \
     && dnf clean all
 
