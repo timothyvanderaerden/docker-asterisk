@@ -1,9 +1,9 @@
 FROM fedora:latest
 
 # Install dependencies (minimal required)
-RUN dnf upgrade -y
-RUN dnf install -y --setopt=install_weak_deps=False libedit sqlite speex speexdsp xmlstarlet libcurl
-RUN dnf install -y --setopt=install_weak_deps=False make gcc-c++ patch libedit-devel libuuid-devel libxml2-devel sqlite-devel \
+RUN dnf upgrade -y \
+    && dnf install -y --setopt=install_weak_deps=False libedit sqlite speex speexdsp xmlstarlet libcurl \
+    && dnf install -y --setopt=install_weak_deps=False make gcc-c++ patch libedit-devel libuuid-devel libxml2-devel sqlite-devel \
     openssl-devel speex-devel speexdsp-devel wget bzip2 findutils diffutils
 
 WORKDIR /tmp
@@ -24,18 +24,16 @@ RUN ./build.sh
 VOLUME /etc/asterisk
 RUN mkdir /usr/local/etc/asterisk
 # Set Ownership
-RUN groupadd asterisk
-RUN useradd -r -d /var/lib/asterisk -g asterisk asterisk
 COPY ./shared/set_ownership.sh /tmp/
 RUN /tmp/set_ownership.sh
 
 # Cleanup
-RUN rm -rf /tmp/*
 RUN dnf remove -y make gcc-c++ patch libedit-devel libuuid-devel libxml2-devel sqlite-devel openssl-devel wget bzip2 findutils diffutils \
-    speex-devel speexdsp-devel
-RUN dnf -y autoremove \
+    speex-devel speexdsp-devel \
+    && dnf -y autoremove \
     && dnf clean all \
-    && rm -rf /var/cache/dnf/*
+    && rm -rf /var/cache/dnf/* \
+    && rm -rf /tmp/*
 
 EXPOSE 5060/udp
 EXPOSE 10000-11000/udp

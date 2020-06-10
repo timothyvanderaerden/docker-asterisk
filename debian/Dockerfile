@@ -4,10 +4,10 @@ FROM debian:latest
 ARG DEBIAN_FRONTEND=noninteractive
 
 # Install dependencies (minimal required)
-RUN apt-get update
-RUN apt-get upgrade -y
-RUN apt-get install -y --no-install-recommends libedit2 sqlite3 libxml2 libssl1.1 speex xmlstarlet libcurl4
-RUN apt-get install -y --no-install-recommends make g++ patch libedit-dev uuid-dev libxml2-dev libsqlite3-dev libssl-dev \
+RUN apt-get update \
+    && apt-get upgrade -y \
+    && apt-get install -y --no-install-recommends libedit2 sqlite3 libxml2 libssl1.1 speex xmlstarlet libcurl4 \
+    && apt-get install -y --no-install-recommends make g++ patch libedit-dev uuid-dev libxml2-dev libsqlite3-dev libssl-dev \
     libspeex-dev libspeexdsp-dev wget bzip2 ca-certificates
 
 WORKDIR /tmp
@@ -28,17 +28,15 @@ RUN ./build.sh
 VOLUME /etc/asterisk
 RUN mkdir /usr/local/etc/asterisk
 # Set Ownership
-RUN groupadd asterisk
-RUN useradd -r -d /var/lib/asterisk -g asterisk asterisk
 COPY ./shared/set_ownership.sh /tmp/
 RUN /tmp/set_ownership.sh
 
 # Cleanup
-RUN rm -rf /tmp/*
-RUN apt-get remove -y make g++ patch libedit-dev uuid-dev libxml2-dev libsqlite3-dev libspeex-dev libspeexdsp-dev wget bzip2 ca-certificates
-RUN apt-get -y autoremove \
+RUN apt-get remove -y make g++ patch libedit-dev uuid-dev libxml2-dev libsqlite3-dev libspeex-dev libspeexdsp-dev wget bzip2 ca-certificates \
+    && apt-get -y autoremove \
     && apt-get clean \
-    && rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/* \
+    rm -rf /tmp/*
 # Fix shared libraries
 RUN echo /usr/lib64 > /etc/ld.so.conf.d/asterisk.conf
 RUN ldconfig
