@@ -21,9 +21,8 @@ RUN ./configure.sh
 COPY ./shared/menuselect.sh ./
 RUN ./menuselect.sh
 # Compile and install Asterisk
-WORKDIR /tmp/asterisk/
-RUN make \
-    && make install
+COPY ./shared/build.sh ./
+RUN ./build.sh
 
 # Configure Asterisk
 VOLUME /etc/asterisk

@@ -21,9 +21,8 @@ RUN ./configure.sh
 COPY ./shared/menuselect.sh ./
 RUN ./menuselect.sh
 # Compile and install Asterisk
-WORKDIR /tmp/asterisk/
-RUN make \
-    && make install
+COPY ./shared/build.sh ./
+RUN ./build.sh
 
 # Configure Asterisk
 VOLUME /etc/asterisk
@@ -36,11 +35,11 @@ RUN /tmp/set_ownership.sh
 
 # Cleanup
 RUN rm -rf /tmp/*
+RUN apt-get remove -y make g++ patch libedit-dev uuid-dev libxml2-dev libsqlite3-dev libssl-dev libspeex-dev libspeexdsp-dev \
+    wget ca-certificates
 RUN apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*
-RUN apt-get remove -y make g++ patch libedit-dev uuid-dev libxml2-dev libsqlite3-dev libssl-dev libspeex-dev libspeexdsp-dev \
-    wget ca-certificates
 
 EXPOSE 5060/udp
 EXPOSE 10000-11000/udp

@@ -17,9 +17,8 @@ RUN ./configure.sh
 COPY ./shared/menuselect.sh ./
 RUN ./menuselect.sh
 # Compile and install Asterisk
-WORKDIR /tmp/asterisk/
-RUN make \
-    && make install
+COPY ./shared/build.sh ./
+RUN ./build.sh
 
 # Configure Asterisk
 VOLUME /etc/asterisk
@@ -35,7 +34,8 @@ RUN rm -rf /tmp/*
 RUN dnf remove -y make gcc-c++ patch libedit-devel libuuid-devel libxml2-devel sqlite-devel openssl-devel wget bzip2 findutils diffutils \
     speex-devel speexdsp-devel
 RUN dnf -y autoremove \
-    && dnf clean all
+    && dnf clean all \
+    && rm -rf /var/cache/dnf/*
 
 EXPOSE 5060/udp
 EXPOSE 10000-11000/udp
