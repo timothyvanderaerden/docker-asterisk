@@ -6,8 +6,8 @@ ARG DEBIAN_FRONTEND=noninteractive
 # Install dependencies (minimal required)
 RUN apt-get update
 RUN apt-get upgrade -y
-RUN apt-get install -y --no-install-recommends libedit2 libjansson4 sqlite3 libxml2 libssl1.1 speex xmlstarlet libcurl4
-RUN apt-get install -y --no-install-recommends make g++ patch libedit-dev uuid-dev libjansson-dev libxml2-dev libsqlite3-dev libssl-dev \
+RUN apt-get install -y --no-install-recommends libedit2 sqlite3 libxml2 libssl1.1 speex xmlstarlet libcurl4
+RUN apt-get install -y --no-install-recommends make g++ patch libedit-dev uuid-dev libxml2-dev libsqlite3-dev libssl-dev \
     libspeex-dev libspeexdsp-dev wget bzip2 ca-certificates
 
 WORKDIR /tmp
@@ -36,7 +36,7 @@ RUN /tmp/set_ownership.sh
 
 # Cleanup
 RUN rm -rf /tmp/*
-RUN apt-get remove -y make g++ patch libedit-dev uuid-dev libjansson-dev libxml2-dev libsqlite3-dev libspeex-dev libspeexdsp-dev wget bzip2 ca-certificates
+RUN apt-get remove -y make g++ patch libedit-dev uuid-dev libxml2-dev libsqlite3-dev libspeex-dev libspeexdsp-dev wget bzip2 ca-certificates
 RUN apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/*

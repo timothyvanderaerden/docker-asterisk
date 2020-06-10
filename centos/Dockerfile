@@ -5,8 +5,8 @@ RUN dnf upgrade -y
 RUN dnf install -y --setopt=install_weak_deps=False epel-release
 RUN dnf install -y --setopt=install_weak_deps=False 'dnf-command(config-manager)'
 RUN dnf config-manager --set-enabled PowerTools
-RUN dnf install -y --setopt=install_weak_deps=False libedit jansson sqlite speex speexdsp xmlstarlet
-RUN dnf install -y --setopt=install_weak_deps=False make gcc-c++ patch libedit-devel libuuid-devel jansson-devel libxml2-devel sqlite-devel \
+RUN dnf install -y --setopt=install_weak_deps=False libedit sqlite speex speexdsp xmlstarlet
+RUN dnf install -y --setopt=install_weak_deps=False make gcc-c++ patch libedit-devel libuuid-devel libxml2-devel sqlite-devel \
     openssl-devel speex-devel speexdsp-devel wget bzip2
 
 WORKDIR /tmp
@@ -35,7 +35,7 @@ RUN /tmp/set_ownership.sh
 
 # Cleanup
 RUN rm -rf /tmp/*
-RUN dnf remove -y make gcc-c++ patch libedit-devel libuuid-devel jansson-devel libxml2-devel sqlite-devel openssl-devel speex-devel speexdsp-devel \
+RUN dnf remove -y make gcc-c++ patch libedit-devel libuuid-devel libxml2-devel sqlite-devel openssl-devel speex-devel speexdsp-devel \
     wget bzip2
 RUN dnf -y autoremove \
     && dnf clean all
