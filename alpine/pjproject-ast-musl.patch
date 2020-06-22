@@ -1,0 +1,10 @@
+--- a/third-party/pjproject/patches/asterisk_malloc_debug.h
++++ b/third-party/pjproject/patches/asterisk_malloc_debug.h
+@@ -20,6 +20,7 @@
+ #include <pj/compat/string.h>
+ #include <pj/compat/stdarg.h>
+ #include <pj/compat/malloc.h>
++#include <pthread.h>
+
+ #ifdef __cplusplus
+ extern "C" {

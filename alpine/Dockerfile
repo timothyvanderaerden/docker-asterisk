@@ -1,14 +1,14 @@
 FROM alpine:latest
 
-ARG CONFIGURE_ARGS="--enable-permanent-dlopen --without-pjproject-bundled"
+ARG CONFIGURE_ARGS="--enable-permanent-dlopen"
 
 # Install dependencies (minimal required)
 RUN apk update \
     && apk upgrade \
-    && apk add --no-cache libedit libuuid sqlite sqlite-libs pjproject libxml2 openssl speex \
+    && apk add --no-cache libedit libuuid sqlite sqlite-libs libxml2 openssl speex \
     && apk add --no-cache --virtual build-deps \
-    make gcc g++ patch libedit-dev util-linux-dev libxml2-dev sqlite-dev pjproject-dev \
-    openssl-dev speex-dev speexdsp-dev wget bzip2 bsd-compat-headers
+    make gcc g++ patch libedit-dev util-linux-dev libxml2-dev sqlite-dev openssl-dev \
+    speex-dev speexdsp-dev wget bzip2 bsd-compat-headers
 
 WORKDIR /tmp
 # Download Asterisk
@@ -19,6 +19,7 @@ COPY ./alpine/*patch ./
 RUN patch -d/tmp/asterisk -p1 -i /tmp/musl-mutex-init.patch
 RUN patch -d/tmp/asterisk -p1 -i /tmp/musl-astmm-fix.patch
 RUN patch -d/tmp/asterisk -p1 -i /tmp/asterisk-cdefs.patch
+RUN patch -d/tmp/asterisk -p1 -i /tmp/pjproject-ast-musl.patch
 # Configure Asterisk
 COPY ./shared/configure.sh ./
 RUN ./configure.sh
