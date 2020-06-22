@@ -37,9 +37,6 @@ RUN apt-get remove -y make g++ patch libedit-dev uuid-dev libxml2-dev libsqlite3
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \
     rm -rf /tmp/*
-# Fix shared libraries
-RUN echo /usr/lib64 > /etc/ld.so.conf.d/asterisk.conf
-RUN ldconfig
 
 EXPOSE 5060/udp
 EXPOSE 10000-11000/udp

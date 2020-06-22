@@ -2,4 +2,4 @@
 set -e
 
 cd /tmp/asterisk/
-./configure --libdir=/usr/lib64 --with-jansson-bundled
+./configure --with-jansson-bundled $CONFIGURE_ARGS \
