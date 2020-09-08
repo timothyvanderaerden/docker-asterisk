@@ -8,7 +8,7 @@ RUN apt-get update \
     && apt-get upgrade -y \
     && apt-get install -y --no-install-recommends libedit2 sqlite3 libxml2 libssl1.1 speex xmlstarlet libcurl4 \
     && apt-get install -y --no-install-recommends make g++ patch libedit-dev uuid-dev libxml2-dev libsqlite3-dev \
-    libssl-dev libspeex-dev libspeexdsp-dev wget ca-certificates
+    libssl-dev libspeex-dev libspeexdsp-dev wget ca-certificates file
 
 WORKDIR /tmp
 # Download Asterisk
@@ -32,7 +32,7 @@ COPY ./shared/set_ownership.sh /tmp/
 RUN /tmp/set_ownership.sh
 
 # Cleanup
-RUN apt-get remove -y make g++ patch libedit-dev uuid-dev libxml2-dev libsqlite3-dev libssl-dev libspeex-dev libspeexdsp-dev wget ca-certificates \
+RUN apt-get remove -y make g++ patch libedit-dev uuid-dev libxml2-dev libsqlite3-dev libssl-dev libspeex-dev libspeexdsp-dev wget ca-certificates file \
     && apt-get -y autoremove \
     && apt-get clean \
     && rm -rf /var/lib/apt/lists/* \

@@ -6,7 +6,7 @@ RUN dnf upgrade -y \
     && dnf config-manager --set-enabled PowerTools \
     && dnf install -y --setopt=install_weak_deps=False libedit sqlite speex speexdsp xmlstarlet \
     && dnf install -y --setopt=install_weak_deps=False make gcc-c++ patch libedit-devel libuuid-devel libxml2-devel sqlite-devel \
-    openssl-devel speex-devel speexdsp-devel wget bzip2
+    openssl-devel speex-devel speexdsp-devel wget bzip2 diffutils file
 
 WORKDIR /tmp
 # Download Asterisk
@@ -31,6 +31,7 @@ RUN /tmp/set_ownership.sh
 
 # Cleanup
 RUN dnf remove -y make gcc-c++ patch libedit-devel libuuid-devel libxml2-devel sqlite-devel openssl-devel speex-devel speexdsp-devel wget bzip2 \
+        diffutils file \
     && dnf -y autoremove \
     && dnf clean all \
     && rm -rf /var/cache/dnf/* \

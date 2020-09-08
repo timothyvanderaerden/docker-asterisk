@@ -4,7 +4,7 @@ FROM fedora:latest
 RUN dnf upgrade -y \
     && dnf install -y --setopt=install_weak_deps=False libedit sqlite speex speexdsp xmlstarlet libcurl \
     && dnf install -y --setopt=install_weak_deps=False make gcc-c++ patch libedit-devel libuuid-devel libxml2-devel sqlite-devel \
-    openssl-devel speex-devel speexdsp-devel wget bzip2 findutils diffutils
+    openssl-devel speex-devel speexdsp-devel wget bzip2 findutils diffutils file
 
 WORKDIR /tmp
 # Download Asterisk
@@ -28,7 +28,7 @@ COPY ./shared/set_ownership.sh /tmp/
 RUN /tmp/set_ownership.sh
 
 # Cleanup
-RUN dnf remove -y make gcc-c++ patch libedit-devel libuuid-devel libxml2-devel sqlite-devel openssl-devel wget bzip2 findutils diffutils \
+RUN dnf remove -y make gcc-c++ patch libedit-devel libuuid-devel libxml2-devel sqlite-devel openssl-devel wget bzip2 findutils diffutils file \
     speex-devel speexdsp-devel \
     && dnf -y autoremove \
     && dnf clean all \
