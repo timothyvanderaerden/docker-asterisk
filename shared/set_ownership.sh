@@ -1,7 +1,7 @@
 #!/bin/sh
 set -e
 
-if [[ -f "/etc/alpine-release" ]]; then
+if [ -f "/etc/alpine-release" ]; then
     addgroup -S asterisk
     adduser -S -D -h /var/lib/asterisk -s /sbin/nologin -G asterisk -g asterisk asterisk
 
