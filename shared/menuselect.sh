@@ -1,7 +1,6 @@
 #!/bin/sh
 
 # codec_resample: allows re-sampling of Signed Linear into different sampling rates 12,16,24,32,44,48,96 or 192 kHz to aid translation.
-# func_channel: required by res_hep to sen statistics
 # pbx_config: used for dialplan config
 
 set -e
@@ -28,9 +27,6 @@ make menuselect.makeopts \
     --enable MOH-OPSOUND-G722 \
     --enable MOH-OPSOUND-GSM \
     --enable pbx_config \
-    --enable res_hep \
-    --enable res_hep_pjsip \
-    --enable res_hep_rtcp \
     --enable res_musiconhold \
     --enable res_pjproject \
     --enable res_pjsip \
