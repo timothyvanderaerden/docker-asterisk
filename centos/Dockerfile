@@ -3,7 +3,7 @@ FROM centos:latest
 # Install dependencies (minimal required), enable PowerTools to have "libedit-devel" package
 RUN dnf upgrade -y \
     && dnf install -y --setopt=install_weak_deps=False epel-release 'dnf-command(config-manager)' \
-    && dnf config-manager --set-enabled PowerTools \
+    && dnf config-manager --set-enabled powertools \
     && dnf install -y --setopt=install_weak_deps=False libedit sqlite speex speexdsp xmlstarlet \
     && dnf install -y --setopt=install_weak_deps=False make gcc-c++ patch libedit-devel libuuid-devel libxml2-devel sqlite-devel \
     openssl-devel speex-devel speexdsp-devel wget bzip2 diffutils file

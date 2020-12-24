@@ -5,7 +5,7 @@ ARG CONFIGURE_ARGS="--enable-permanent-dlopen"
 # Install dependencies (minimal required)
 RUN apk update \
     && apk upgrade \
-    && apk add --no-cache libedit libuuid sqlite sqlite-libs libxml2 openssl speex \
+    && apk add --no-cache libedit libuuid sqlite sqlite-libs libxml2 openssl speex speexdsp \
     && apk add --no-cache --virtual build-deps \
     make gcc g++ patch libedit-dev util-linux-dev libxml2-dev sqlite-dev openssl-dev \
     speex-dev speexdsp-dev wget bzip2 bsd-compat-headers linux-headers
